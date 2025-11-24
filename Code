@@ -1,0 +1,60 @@
+CarController-------------->
+using UnityEngine;
+
+public class CarController : MonoBehaviour
+{
+    public float speed = 10f;
+    public float turnSpeed = 50f;
+    private Rigidbody rb;
+
+    void Start()
+    {
+        rb = GetComponent<Rigidbody>();
+    }
+
+    void FixedUpdate()
+    {
+        float move = Input.GetAxis("Vertical") * speed;
+        float turn = Input.GetAxis("Horizontal") * turnSpeed;
+
+        rb.MovePosition(transform.position + transform.forward * move * Time.deltaTime);
+        transform.Rotate(Vector3.up * turn * Time.deltaTime);
+    }
+}
+
+
+PointSystem-------------->
+using UnityEngine;
+using UnityEngine.UI;
+
+public class PointSystem : MonoBehaviour
+{
+    public int score = 0;
+    public Text scoreText;
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Point"))
+        {
+            score++;
+            scoreText.text = "Score: " + score;
+            Destroy(other.gameObject);
+        }
+    }
+}
+
+
+Coins-------------------->
+using UnityEngine;
+
+public class RotateAndDestroy : MonoBehaviour
+{
+    public float rotationSpeed = 50f;
+
+    void Update()
+    {
+        // Rotate around Y axis
+        transform.Rotate(rotationSpeed * Time.deltaTime, 0 , 0);
+    }
+
+}
